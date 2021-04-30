@@ -24,7 +24,12 @@ public class MailAccount {
     @ManyToMany
     private List<MailAccount>blocked;
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    public MailAccount() {
+
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -46,8 +51,63 @@ public class MailAccount {
         this.sent = new ArrayList<>();
         this.friends = new ArrayList<>();
         this.blocked = new ArrayList<>();
-        this.id = id;
     }
+    public boolean addToBlocked(MailAccount account){
+        return blocked.add(account);
+    }
+    public boolean removeFromBlocked(MailAccount account){
+        for(MailAccount mailAccount:blocked){
+            if (mailAccount.getId() == account.getId()){
+                return blocked.remove(mailAccount);
+            }
+        }
+        return  false;
+    }
+    public boolean inBlocked(MailAccount account){
+        return blocked.contains(account);
+    }
+
+    public boolean addToFriends(MailAccount account){
+        return  friends.add(account);
+    }
+
+    public boolean removeFromFriends(MailAccount account){
+        for(MailAccount mailAccount:friends){
+            if (mailAccount.getId() == account.getId()){
+                return blocked.remove(mailAccount);
+            }
+        }
+        return  false;
+    }
+    public boolean inFriends(MailAccount account){
+        return friends.contains(account);
+    }
+
+    public boolean addTosent(Message message){
+        return  sent.add(message);
+    }
+    public boolean removeFromSent(Message message){
+        for(Message message1:sent){
+            if(message1.getId()== message.getId()){
+                return sent.remove(message1);
+            }
+        }
+        return  false;
+    }
+    public  boolean addToRecieved(Message message){
+       return recieved.add(message);
+    }
+    public boolean removeFromRecieved(Message message){
+        for(Message message1:recieved){
+            if(message1.getId()== message.getId()){
+                return sent.remove(message1);
+            }
+        }
+        return  false;
+
+    }
+
+
 
     public String getPassword() {
         return password;
