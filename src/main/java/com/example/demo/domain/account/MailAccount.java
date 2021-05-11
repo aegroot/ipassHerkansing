@@ -1,7 +1,6 @@
 package com.example.demo.domain.account;
 
 import com.example.demo.domain.message.Message;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ public class MailAccount {
     private Long id;
 
     public MailAccount() {
-
     }
 
     public void setId(Long id) {
@@ -53,16 +51,19 @@ public class MailAccount {
         this.blocked = new ArrayList<>();
     }
     public boolean addToBlocked(MailAccount account){
+        if (account.getMail()==this.getMail()||this.inBlocked(account)){return  false;}
         return blocked.add(account);
     }
     public boolean removeFromBlocked(MailAccount account){
         for(MailAccount mailAccount:blocked){
-            if (mailAccount.getId() == account.getId()){
+            if (mailAccount.getMail() == account.getMail()){
                 return blocked.remove(mailAccount);
             }
         }
         return  false;
     }
+
+
     public boolean inBlocked(MailAccount account){
         return blocked.contains(account);
     }
@@ -73,7 +74,7 @@ public class MailAccount {
 
     public boolean removeFromFriends(MailAccount account){
         for(MailAccount mailAccount:friends){
-            if (mailAccount.getId() == account.getId()){
+            if (mailAccount.getMail() == account.getMail()){
                 return blocked.remove(mailAccount);
             }
         }

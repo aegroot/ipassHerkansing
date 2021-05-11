@@ -4,12 +4,8 @@ package com.example.demo.presentation;
 import com.example.demo.application.AccountService;
 import com.example.demo.application.MessageService;
 import com.example.demo.domain.account.MailAccount;
-import com.example.demo.domain.message.Message;
+import com.example.demo.presentation.dto.RegisterDto;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("account")
@@ -22,27 +18,21 @@ public class MailAccountController {
         this.accountservice = accountservice;
         this.messageService = messageService;
     }
-
-
-    @PutMapping("create")
-    public MailAccount create(@RequestParam("mail")String mail,
+/*
+@RequestParam("mail")String mail,
                               @RequestParam("password")String password,
-                              @RequestParam("birthdate")Date date,
-                              @RequestParam("name")String name){
-        return accountservice.save(new MailAccount(mail,password,date,name));
+                              @RequestParam("birthdate")String date,
+                              @RequestParam("name")String name
+ */
+
+    @PostMapping()
+    public MailAccount create(
+            @RequestBody RegisterDto registerDto){
+        return accountservice.save((registerDto.toMail()));
 
     }
 
-    @PostMapping("send")
-    public Message send(@RequestParam("send") Long sender,
-                        @RequestParam("rec") List<Long> recipient){
 
-        List<MailAccount>accounts=new ArrayList<>();
-        for(Long id:recipient){
-            accounts.add(accountservice.findById(id));
-        }
-        return messageService.save(new Message(accounts,accountservice.findById(sender)));
-    }
 
 
 }

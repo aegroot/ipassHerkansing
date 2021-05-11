@@ -1,5 +1,6 @@
 package com.example.demo.domain.message;
 
+
 import com.example.demo.domain.account.MailAccount;
 
 import javax.persistence.*;
@@ -11,13 +12,17 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
+    private String message;
+    private String title;
     @ManyToMany
     private List<MailAccount> recipient;
     @ManyToOne
     private  MailAccount sender;
     private Date sendDate;
 
-    public Message( List<MailAccount> recipient, MailAccount sender) {
+    public Message( List<MailAccount> recipient, MailAccount sender,String message,String title) {
+        this.title=title;
+        this.message=message;
         this.recipient = recipient;
         this.sender = sender;
         this.sendDate = new Date(System.currentTimeMillis());
@@ -32,6 +37,10 @@ public class Message {
 
     public Message() {
 
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public Date getSendDate() {

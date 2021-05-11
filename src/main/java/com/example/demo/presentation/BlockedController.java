@@ -2,10 +2,12 @@ package com.example.demo.presentation;
 
 import com.example.demo.application.AccountService;
 import com.example.demo.domain.account.MailAccount;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.presentation.dto.AccountListDto;
+import com.example.demo.presentation.dto.AddAccoundToListDto;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -17,13 +19,25 @@ public class BlockedController {
         this.accountservice = accountservice;
     }
 
-    @PostMapping("add")
-    public MailAccount add(@RequestParam("target")Long target, @RequestParam("adder")Long adder){
-        MailAccount accountt=accountservice.findById(target);
-        MailAccount accounta=accountservice.findById(adder);
+    @PostMapping()
+    public MailAccount add(@RequestBody AddAccoundToListDto dto){
+        MailAccount accountt=accountservice.findById(dto.getTarget());
+        MailAccount accounta=accountservice.findById(dto.getAdder());
         accounta.addToBlocked(accountt);
         return accountservice.update(accounta);
     }
+    @GetMapping
+    public List<AccountListDto>getList(@RequestBody long id){
+        MailAccount account=accountservice.findById(id);
+        List<AccountListDto>accountListDtos=new ArrayList<>();
+        for(MailAccount account1:account.getBlocked()){
+            accountListDtos.add(new AccountListDto(account.getMail(),account1.getName()));
+        }
+        return  accountListDtos;
+    }
+
+
+
 
 
 }
