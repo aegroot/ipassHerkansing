@@ -2,14 +2,15 @@ package com.example.demo.domain.account;
 
 import com.example.demo.domain.message.Message;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
-public class MailAccount {
-
+public class MailAccount{
+    @Column(unique=true)
     private String mail;
     private String password;
     private Date birthDate;
@@ -69,13 +70,16 @@ public class MailAccount {
     }
 
     public boolean addToFriends(MailAccount account){
+        if (account.getMail()==this.getMail()||this.inBlocked(account)||inFriends(account)){return  false;}
+        else
         return  friends.add(account);
     }
 
     public boolean removeFromFriends(MailAccount account){
         for(MailAccount mailAccount:friends){
             if (mailAccount.getMail() == account.getMail()){
-                return blocked.remove(mailAccount);
+                blocked.remove(mailAccount);
+                return  true;
             }
         }
         return  false;
@@ -90,7 +94,8 @@ public class MailAccount {
     public boolean removeFromSent(Message message){
         for(Message message1:sent){
             if(message1.getId()== message.getId()){
-                return sent.remove(message1);
+                sent.remove(message1);
+                return  true;
             }
         }
         return  false;
@@ -101,7 +106,8 @@ public class MailAccount {
     public boolean removeFromRecieved(Message message){
         for(Message message1:recieved){
             if(message1.getId()== message.getId()){
-                return sent.remove(message1);
+                sent.remove(message1);
+                return true;
             }
         }
         return  false;

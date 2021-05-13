@@ -7,17 +7,21 @@
 <body>
 
 <form>
-    <label>mail
-    <input type="email" class="email"> <button>add another</button>
+    <label class="mailContainer">mail
+    <input type="email" class="email" name="recipient"> <button id="add-button" onclick="addMail()">add another</button>
     </label>
+    <br>
     <label> title
-        <input type="text">
+        <input type="text" name="title">
     </label>
-    <label> text
-        <input type="text">
+    <br>
+    <label> message
+        <input type="text" name="message">
     </label>
+    <br>
     <button>send</button>
 </form>
+<script src="../js/send.js"></script>
 
 <a href="homepage.html">terug</a>
 

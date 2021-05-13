@@ -2,10 +2,10 @@
 function fillableinbox() {
     const tbody=document.querySelector("tbody");
 
-    fetch("mail/10",{method:'get'})
+    fetch("mail/1",{method:'get'})
         .then(response=>Promise.all([response.status,response.json()]))
         .then(function ([status,myJson]){
-            console.log(status)
+            console.log(myJson)
             for(let i=0;i<myJson.length;i++){
                 let titel = myJson[i].title;
                 let datum = myJson[i].sendDate;
@@ -17,13 +17,6 @@ function fillableinbox() {
                                    </tr>`;
             }
         })
-
-
-
-
-
-
-
 }
 
 fillableinbox();
