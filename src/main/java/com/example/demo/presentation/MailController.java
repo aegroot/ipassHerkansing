@@ -6,6 +6,7 @@ import com.example.demo.application.MessageService;
 import com.example.demo.domain.account.MailAccount;
 import com.example.demo.domain.message.Message;
 import com.example.demo.presentation.dto.MessageListDTO;
+import com.example.demo.presentation.dto.SendMailDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -31,22 +32,19 @@ public class MailController {
 
 
     @PostMapping()
-    public Message send(@RequestParam("send") Long sender,
-                        @RequestParam("rec") List<Long> recipient,
-                        @RequestParam("message")String message,
-                        @RequestParam("title")String title
-            ){
+    public Message send(@RequestBody SendMailDto dto){
         List<MailAccount>accounts=new ArrayList<>();
-        for(Long id:recipient){
-            accounts.add(accountservice.findById(id));
+        for(String id: dto.getRecipients()){
+            accounts.add(accountservice.findByMail(id));
         }
-        return messageService.save(new Message(accounts,accountservice.findById(sender),message,title));
+        return messageService.save(new Message(accounts,accountservice.findByMail(dto.getSender()),dto.getMessage(),dto.getTitle()));
     }
     @GetMapping("{id}")
     public List<MessageListDTO>findAll(@PathVariable("id") long id){
+        System.out.println(id);
         List<MessageListDTO>messageListDTOList=new ArrayList<>();
 
-        List<Message> messages= accountservice.findById( id).getRecieved();
+        List<Message> messages= accountservice.findById(id).getRecieved();
         for(Message message : messages){
             messageListDTOList.add(new MessageListDTO(message.getTitle()
                     ,message.getSender().getMail()

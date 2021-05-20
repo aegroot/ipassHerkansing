@@ -28,6 +28,14 @@ public class AccountService {
         return optionalMailAccount.orElseThrow();
     }
 
+    public MailAccount findByMail(String mail){
+        System.out.println(mail);
+
+        Optional<MailAccount>mailAccountOptional= (repository.findMailAccountByMail(mail));
+        System.out.println(mailAccountOptional.isPresent());
+        return mailAccountOptional.orElse(null);
+    }
+
 
     public MailAccount update(MailAccount mailAccount){
         Optional<MailAccount> account=repository.findById(mailAccount.getId());

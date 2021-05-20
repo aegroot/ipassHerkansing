@@ -4,6 +4,7 @@ package com.example.demo.presentation;
 import com.example.demo.application.AccountService;
 import com.example.demo.application.MessageService;
 import com.example.demo.domain.account.MailAccount;
+import com.example.demo.presentation.dto.MailDto;
 import com.example.demo.presentation.dto.RegisterDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +19,6 @@ public class MailAccountController {
         this.accountservice = accountservice;
         this.messageService = messageService;
     }
-/*
-@RequestParam("mail")String mail,
-                              @RequestParam("password")String password,
-                              @RequestParam("birthdate")String date,
-                              @RequestParam("name")String name
- */
 
     @PostMapping()
     public MailAccount create(
@@ -31,6 +26,19 @@ public class MailAccountController {
         return accountservice.save((registerDto.toMail()));
 
     }
+
+    @DeleteMapping
+    public void delete(@RequestBody MailDto dto) throws IllegalAccessException {
+
+
+        System.out.println(dto);
+        MailAccount account=accountservice.findByMail(dto.getMail());
+        //if(dto.getPassword()!=account.getPassword()){throw new IllegalAccessException();}
+        accountservice.delete(account);
+
+
+    }
+
 
 
 

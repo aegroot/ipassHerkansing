@@ -1,8 +1,9 @@
 
 function fillableinbox() {
-    const tbody=document.querySelector("tbody");
+    localStorage.setItem("id","1");
 
-    fetch("mail/1",{method:'get'})
+    const tbody=document.querySelector("tbody");
+    fetch(`http://localhost:8080/mail/${localStorage.getItem("id")}`,{method:'get'})
         .then(response=>Promise.all([response.status,response.json()]))
         .then(function ([status,myJson]){
             console.log(myJson)
