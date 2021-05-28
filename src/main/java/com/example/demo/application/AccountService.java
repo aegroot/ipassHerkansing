@@ -24,8 +24,16 @@ public class AccountService {
         repository.delete(mailAccount);
     }
     public MailAccount findById(Long id){
-        Optional<MailAccount>optionalMailAccount=repository.findById(id);
+        Optional<MailAccount> optionalMailAccount=repository.findById(id);
         return optionalMailAccount.orElseThrow();
+    }
+
+    public MailAccount findByMail(String mail){
+        System.out.println(mail);
+
+        Optional<MailAccount>mailAccountOptional= (repository.findMailAccountByMail(mail));
+        System.out.println(mailAccountOptional.isPresent());
+        return mailAccountOptional.orElse(null);
     }
 
 

@@ -1,16 +1,16 @@
 package com.example.demo.domain.account;
 
 import com.example.demo.domain.message.Message;
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
-public class MailAccount {
-
+public class MailAccount{
+    @Column(unique=true)
     private String mail;
     private String password;
     private Date birthDate;
@@ -24,7 +24,11 @@ public class MailAccount {
     @ManyToMany
     private List<MailAccount>blocked;
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    public MailAccount() {
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -46,8 +50,71 @@ public class MailAccount {
         this.sent = new ArrayList<>();
         this.friends = new ArrayList<>();
         this.blocked = new ArrayList<>();
-        this.id = id;
     }
+    public boolean addToBlocked(MailAccount account){
+        if (account.getMail()==this.getMail()||this.inBlocked(account)){return  false;}
+        return blocked.add(account);
+    }
+    public boolean removeFromBlocked(MailAccount account){
+        for(MailAccount mailAccount:blocked){
+            if (mailAccount.getMail() == account.getMail()){
+                return blocked.remove(mailAccount);
+            }
+        }
+        return  false;
+    }
+
+
+    public boolean inBlocked(MailAccount account){
+        return blocked.contains(account);
+    }
+
+    public boolean addToFriends(MailAccount account){
+        if (account.getMail()==this.getMail()||this.inBlocked(account)||inFriends(account)){return  false;}
+        else
+        return  friends.add(account);
+    }
+
+    public boolean removeFromFriends(MailAccount account){
+        for(MailAccount mailAccount:friends){
+            if (mailAccount.getMail() == account.getMail()){
+                blocked.remove(mailAccount);
+                return  true;
+            }
+        }
+        return  false;
+    }
+    public boolean inFriends(MailAccount account){
+        return friends.contains(account);
+    }
+
+    public boolean addTosent(Message message){
+        return  sent.add(message);
+    }
+    public boolean removeFromSent(Message message){
+        for(Message message1:sent){
+            if(message1.getId()== message.getId()){
+                sent.remove(message1);
+                return  true;
+            }
+        }
+        return  false;
+    }
+    public  boolean addToRecieved(Message message){
+       return recieved.add(message);
+    }
+    public boolean removeFromRecieved(Message message){
+        for(Message message1:recieved){
+            if(message1.getId()== message.getId()){
+                sent.remove(message1);
+                return true;
+            }
+        }
+        return  false;
+
+    }
+
+
 
     public String getPassword() {
         return password;
