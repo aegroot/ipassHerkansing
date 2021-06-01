@@ -29,9 +29,9 @@ public class BlockedController {
         return new AccountListDto(accounta.getMail(),accounta.getName());
     }
 
-    @GetMapping
-    public List<AccountListDto>getList(@RequestParam String id){
-        MailAccount account=accountservice.findByMail(id);
+    @GetMapping("{id}")
+    public List<AccountListDto>getList(@PathVariable("id") long id){
+        MailAccount account=accountservice.findById(id);
         List<AccountListDto>accountListDtos=new ArrayList<>();
         for(MailAccount account1:account.getBlocked()){
             accountListDtos.add(new AccountListDto(account.getMail(),account1.getName()));

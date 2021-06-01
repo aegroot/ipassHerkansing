@@ -88,18 +88,18 @@ class MailAccountTest {
     }
     @Test
     void addToSentGood(){
-        assertTrue(account1.addTosent(new Message(List.of(account3,account2),account1,"beste ...","groeten")));
+        assertTrue(account1.addTosent(new Message(account2,account1,"beste ...","groeten")));
     }
     @Test
     void removeFromSentGood(){
-        Message bericht=new Message(List.of(account3,account2),account1,"beste ...","groeten");
+        Message bericht=new Message(account2,account1,"beste ...","groeten");
 
         account1.addTosent(bericht);
         assertTrue(account1.removeFromSent(bericht));
     }
     @Test
     void removeFromSentAbsent(){
-        Message bericht=new Message(List.of(account3,account1),account2,"beste ...","groeten");
+        Message bericht=new Message(account1,account2,"beste ...","groeten");
         assertFalse(account1.removeFromSent(bericht));
 
     }

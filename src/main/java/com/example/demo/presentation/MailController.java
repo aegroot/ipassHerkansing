@@ -5,7 +5,8 @@ import com.example.demo.application.AccountService;
 import com.example.demo.application.MessageService;
 import com.example.demo.domain.account.MailAccount;
 import com.example.demo.domain.message.Message;
-import com.example.demo.presentation.dto.MessageListDTO;
+import com.example.demo.presentation.dto.FindMailDTO;
+import com.example.demo.presentation.dto.MessageDTO;
 import com.example.demo.presentation.dto.SendMailDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,28 +31,40 @@ public class MailController {
 
              */
 
-
     @PostMapping()
     public Message send(@RequestBody SendMailDto dto){
-        List<MailAccount>accounts=new ArrayList<>();
-        for(String id: dto.getRecipients()){
-            accounts.add(accountservice.findByMail(id));
-        }
-        return messageService.save(new Message(accounts,accountservice.findByMail(dto.getSender()),dto.getMessage(),dto.getTitle()));
+        MailAccount sender=accountservice.findByMail(dto.getSender());
+        MailAccount recipient=accountservice.findByMail(dto.getRecipient());
+        return messageService.save(new Message(recipient,sender,dto.getMessage(),dto.getTitle()));
     }
+
     @GetMapping("{id}")
-    public List<MessageListDTO>findAll(@PathVariable("id") long id){
+    public List<MessageDTO> findAll(@PathVariable("id") long id){
         System.out.println(id);
-        List<MessageListDTO>messageListDTOList=new ArrayList<>();
+        List<MessageDTO>messageList=new ArrayList<>();
 
         List<Message> messages= accountservice.findById(id).getRecieved();
         for(Message message : messages){
-            messageListDTOList.add(new MessageListDTO(message.getTitle()
+            messageList.add(new MessageDTO(message.getTitle()
                     ,message.getSender().getMail()
                     ,message.getSendDate()));
-
         }
-        return messageListDTOList;
+        return messageList;
+    }
+    @GetMapping("{id}/{mid}")
+    public FindMailDTO findMail(@PathVariable("id") long id, @PathVariable("mid") long mid){
+        Message message=messageService.findById(mid);
+        if(id== message.getSender().getId()){
+            return  null;
+        }
+
+        return  new FindMailDTO(message.getSender().getMail(),
+                message.getRecipient().getMail(),
+                message.getMessage(), message.getTitle(),message.getSendDate(), message.getId());
+
+
+
+
     }
 
 }

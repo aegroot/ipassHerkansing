@@ -1,0 +1,23 @@
+
+
+footer,header{
+    position: absolute;
+    background-color: gray;
+    width: 100%;
+}
+
+header{top:0;}
+footer{
+    bottom: 0;
+}
+
+div{
+    margin: 200px;
+    background-color: gray;
+    min-height: 300px;
+    padding: 100px;
+}
+tr,th,td{border: 5px solid black}
+
+
+

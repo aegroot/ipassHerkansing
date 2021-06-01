@@ -1,10 +1,8 @@
 package com.example.demo.presentation.dto;
 
-import java.util.List;
-
 public class SendMailDto {
     String sender;
-    List<String> recipients;
+   String recipient;
     String message;
     String title;
 
@@ -12,8 +10,8 @@ public class SendMailDto {
         return title;
     }
 
-    public List<String> getRecipients() {
-        return recipients;
+    public String getRecipient() {
+        return recipient;
     }
 
     public String getMessage() {
@@ -24,9 +22,9 @@ public class SendMailDto {
         return sender;
     }
 
-    public SendMailDto(String sender, List<String> recipients, String message, String title) {
+    public SendMailDto(String sender, String recipients, String message, String title) {
         this.sender = sender;
-        this.recipients = recipients;
+        this.recipient = recipients;
         this.message = message;
         this.title = title;
     }

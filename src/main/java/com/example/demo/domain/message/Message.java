@@ -2,6 +2,7 @@ package com.example.demo.domain.message;
 
 
 import com.example.demo.domain.account.MailAccount;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -14,29 +15,31 @@ public class Message {
     private int id;
     private String message;
     private String title;
-    @ManyToMany
-    private List<MailAccount> recipient;
     @ManyToOne
+    @JsonIgnore
+    private MailAccount recipient;
+    @ManyToOne
+    @JsonIgnore
     private  MailAccount sender;
     private Date sendDate;
 
-    public Message( List<MailAccount> recipient, MailAccount sender,String message,String title) {
+    public Message(MailAccount recipient, MailAccount sender,String message,String title) {
         this.title=title;
         this.message=message;
         this.recipient = recipient;
         this.sender = sender;
         this.sendDate = new Date(System.currentTimeMillis());
-
+        if(!recipient.inBlocked(sender)){
+            recipient.addToRecieved(this);}
         sender.addTosent(this);
-        for(MailAccount account:recipient){
-            if(!account.inBlocked(sender)){
-            account.addToRecieved(this);}
-            else {recipient.remove(account);}
-        }
     }
 
     public Message() {
 
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public String getTitle() {
@@ -51,7 +54,7 @@ public class Message {
         return id;
     }
 
-    public List<MailAccount> getRecipient() {
+    public MailAccount getRecipient() {
         return recipient;
     }
 

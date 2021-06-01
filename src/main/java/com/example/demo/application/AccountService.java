@@ -2,6 +2,7 @@ package com.example.demo.application;
 
 import com.example.demo.domain.account.MailAccount;
 import com.example.demo.domain.account.SpringAccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class AccountService {
+
     private  final SpringAccountRepository repository;
 
 
