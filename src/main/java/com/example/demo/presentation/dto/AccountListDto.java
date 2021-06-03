@@ -8,7 +8,6 @@ public class AccountListDto {
         this.mail = mail;
         this.naam = naam;
     }
-
     public String getMail() {
         return mail;
     }

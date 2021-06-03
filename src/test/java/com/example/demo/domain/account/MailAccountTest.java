@@ -1,6 +1,7 @@
 package com.example.demo.domain.account;
 
 import com.example.demo.domain.message.Message;
+import com.example.demo.security.data.Role;
 import org.aspectj.lang.annotation.Before;
 import org.assertj.core.internal.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +23,12 @@ class MailAccountTest {
 
     @BeforeEach
     void setup(){
-       account1=new MailAccount("tomspijker@live.nl","bes5r0ng",new Date(1998, 2,20),"tom");
-       account2=new MailAccount("marieke_doorn@live.nl","b3stday45ver",new Date(1989,4,9),"marieke");
-       account3=new MailAccount("klaas-vlaanderen@live.nl","7rfouvi",new Date(2000,8,28),"klaas");
+       account1=new MailAccount("tomspijker@live.nl","bes5r0ng",
+               new Date(1998, 2,20),"tom","spijker", Role.gebruiker);
+       account2=new MailAccount("marieke_doorn@live.nl","b3stday45ver",
+               new Date(1989,4,9),"marieke","doorn",Role.gebruiker);
+       account3=new MailAccount("klaas-vlaanderen@live.nl","7rfouvi",
+               new Date(2000,8,28),"klaas","vlaanderen",Role.gebruiker);
 
 
     }

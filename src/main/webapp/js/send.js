@@ -13,7 +13,6 @@ form.addEventListener("submit",
         for (let i = 0; i < mailList.length; i++) {
             console.log(mailList[i])
             const reqbody = {
-                "sender": "quest@mail.com",
                 "recipient": mailList[i],
                 "title": fd.get("title"),
                 "message": fd.get("message")
@@ -29,7 +28,7 @@ form.addEventListener("submit",
 
             fetch('http://localhost:8080/mail', {
                 method: 'post', body: JSON.stringify(reqbody)
-                , headers: {"content-type": "application/json"}
+                , headers: {"content-type": "application/json","Authorization":sessionStorage.getItem("myJwt")}
             })
                 .then(response => response.json())
                 .then(status => {

@@ -1,5 +1,6 @@
 package com.example.demo.security.data;
 
+import com.example.demo.security.data.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,13 +34,15 @@ public class User implements UserDetails {
     private String password;
     private String firstName;
     private String lastName;
+    private Role role;
 
     public User(){}
-    public User(String username, String password, String firstName, String lastName) {
+    public User(String username, String password, String firstName, String lastName,Role role) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.role=role;
     }
 
     public Long getId() {
@@ -83,8 +86,20 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 }

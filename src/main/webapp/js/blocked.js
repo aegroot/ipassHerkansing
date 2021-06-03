@@ -1,9 +1,10 @@
 function fillTableBlocked(){
 
+
     const tbody=document.querySelector("tbody");
-    fetch(`blocked/1`,{method:'get'})
+    fetch(`blocked`,{method:'get',headers:{"Authorization":sessionStorage.getItem("myJwt")}})
         .then(response=>Promise.all([response.status,response.json()]))
-        .then(function ( [status,myJson]) {
+        .then(function ( [myJson]) {
             console.log(myJson);
             for(let i=0;i<myJson.length;i++){
                 let naam=myJson[i].naam;
@@ -26,13 +27,11 @@ function removeFromBlocked(e){
     }
     const row=e.target.closest("tr")
     const mail=row.querySelector(".mailContainer");
-    const id=localStorage.getItem("id")
-    const deleteBody=`{adder:${id},target:${mail}}`
 
-    fetch('blocked',{method:'DELETE',deleteBody
-        ,headers: {"content-type": "application/json"}})
+    fetch(`blocked/${mail}`,{method:'DELETE'
+        ,headers: {"Authorization":sessionStorage.getItem("myJwt")}})
         .then(Response=>{
-            if(!Response.ok){throw new Error(Response.status);}
+            if(!Response.ok){throw new Error(Response.status);}window.location.reload()
         })
 
 

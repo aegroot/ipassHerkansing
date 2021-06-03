@@ -1,6 +1,9 @@
 package com.example.demo.domain.account;
 
 import com.example.demo.domain.message.Message;
+import com.example.demo.security.data.Role;
+import com.example.demo.security.data.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -9,12 +12,9 @@ import java.util.List;
 
 
 @Entity
-public class MailAccount{
+public class MailAccount extends User {
     @Column(unique=true)
-    private String mail;
-    private String password;
     private Date birthDate;
-    private String name;
     @ManyToMany
     private List<Message>recieved;
     @ManyToMany
@@ -27,6 +27,7 @@ public class MailAccount{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+
     public MailAccount() {
     }
 
@@ -37,27 +38,22 @@ public class MailAccount{
         return id;
     }
 
-    public String getMail() {
-        return mail;
-    }
 
-    public MailAccount(String mail, String password, Date birthDate, String name) {
-        this.mail = mail;
-        this.password = password;
+    public MailAccount(String mail, String password, Date birthDate, String name, String lastname, Role role) {
+        super(mail,password,name,lastname,role);
         this.birthDate = birthDate;
-        this.name = name;
         this.recieved = new ArrayList<>();
         this.sent = new ArrayList<>();
         this.friends = new ArrayList<>();
         this.blocked = new ArrayList<>();
     }
     public boolean addToBlocked(MailAccount account){
-        if (account.getMail()==this.getMail()||this.inBlocked(account)){return  false;}
+        if (account.getUsername().equals(this.getUsername()) ||this.inBlocked(account)){return  false;}
         return blocked.add(account);
     }
     public boolean removeFromBlocked(MailAccount account){
         for(MailAccount mailAccount:blocked){
-            if (mailAccount.getMail() == account.getMail()){
+            if (mailAccount.getUsername().equals(account.getUsername())){
                 return blocked.remove(mailAccount);
             }
         }
@@ -70,14 +66,14 @@ public class MailAccount{
     }
 
     public boolean addToFriends(MailAccount account){
-        if (account.getMail()==this.getMail()||this.inBlocked(account)||inFriends(account)){return  false;}
+        if (account.getUsername().equals(this.getUsername()) ||this.inBlocked(account)||inFriends(account)){return  false;}
         else
         return  friends.add(account);
     }
 
     public boolean removeFromFriends(MailAccount account){
         for(MailAccount mailAccount:friends){
-            if (mailAccount.getMail() == account.getMail()){
+            if (mailAccount.getUsername().equals(account.getUsername())){
                 blocked.remove(mailAccount);
                 return  true;
             }
@@ -116,13 +112,7 @@ public class MailAccount{
 
 
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public Date getBirthDate() {
         return birthDate;
@@ -132,13 +122,6 @@ public class MailAccount{
         this.birthDate = birthDate;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public List<Message> getRecieved() {
         return recieved;

@@ -44,7 +44,8 @@ public class AccountService {
         if(account.isPresent()){
             MailAccount account1=account.get();
             account1.setBirthDate(mailAccount.getBirthDate());
-            account1.setName(mailAccount.getName());
+            account1.setFirstName(mailAccount.getFirstName());
+            account1.setLastName(mailAccount.getLastName());
             account1.setBlocked(mailAccount.getBlocked());
             account1.setFriends(mailAccount.getFriends());
             account1.setRecieved(mailAccount.getRecieved());

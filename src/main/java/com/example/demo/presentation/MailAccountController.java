@@ -6,6 +6,9 @@ import com.example.demo.application.MessageService;
 import com.example.demo.domain.account.MailAccount;
 import com.example.demo.presentation.dto.MailDto;
 import com.example.demo.presentation.dto.RegisterDto;
+import com.example.demo.security.data.User;
+import com.example.demo.security.data.UserProfile;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,7 +38,11 @@ public class MailAccountController {
         MailAccount account=accountservice.findByMail(dto.getMail());
         //if(dto.getPassword()!=account.getPassword()){throw new IllegalAccessException();}
         accountservice.delete(account);
+    }
+    @GetMapping
+    public UserProfile check(Authentication authentication){
 
+        return (UserProfile) authentication.getPrincipal();
 
     }
 

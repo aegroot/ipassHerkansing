@@ -1,7 +1,6 @@
 package com.example.demo.presentation.dto;
 
 public class SendMailDto {
-    String sender;
    String recipient;
     String message;
     String title;
@@ -18,12 +17,7 @@ public class SendMailDto {
         return message;
     }
 
-    public String getSender() {
-        return sender;
-    }
-
-    public SendMailDto(String sender, String recipients, String message, String title) {
-        this.sender = sender;
+    public SendMailDto( String recipients, String message, String title) {
         this.recipient = recipients;
         this.message = message;
         this.title = title;

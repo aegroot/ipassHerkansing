@@ -1,6 +1,7 @@
 package com.example.demo.presentation.dto;
 
 import com.example.demo.domain.account.MailAccount;
+import com.example.demo.security.data.Role;
 
 import java.sql.Date;
 
@@ -11,10 +12,12 @@ public class RegisterDto {
     private  int gbmonth;
     private int gbday;
     private String naam;
+    private String achternaam;
 
    public MailAccount toMail(){
-       return  new MailAccount(mail,password,new Date(gbyear-1900,gbmonth,gbday),naam);
+       return  new MailAccount(mail,password,new Date(gbyear-1900,gbmonth,gbday),naam,achternaam, Role.gebruiker);
    }
+
 
     public RegisterDto(String mail, String password, int gbyear, int gbmonth, int gbday, String naam) {
         this.mail = mail;
@@ -35,5 +38,9 @@ public class RegisterDto {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getAchternaam() {
+        return achternaam;
     }
 }

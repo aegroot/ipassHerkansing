@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface SpringAccountRepository extends JpaRepository<MailAccount,Long> {
-    @Query(nativeQuery = true, value = "select id,birth_date,mail,name,password from mail_account where mail=?")
+    @Query(nativeQuery = true, value = "select * from users where username=?")
     Optional<MailAccount> findMailAccountByMail(String mail);
 }
