@@ -3,7 +3,7 @@ function fillableinbox() {
     sessionStorage.setItem("id","1")
 
     const tbody=document.querySelector("tbody");
-    fetch(`http://localhost:8080/mail/${localStorage.getItem("id")}`,{method:'get',headers:{}})
+    fetch(`http://localhost:8080/mail/`,{method:'get',headers:{"Authorization":sessionStorage.getItem("myJwt")}})
         .then(response=>Promise.all([response.status,response.json()]))
         .then(function ([status,myJson]){
             console.log(myJson)

@@ -6,13 +6,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+    private long id;
     private String message;
     private String title;
     @ManyToOne
@@ -50,7 +49,7 @@ public class Message {
         return sendDate;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
