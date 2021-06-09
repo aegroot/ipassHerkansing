@@ -1,11 +1,10 @@
 
 function fillableinbox() {
-    sessionStorage.setItem("id","1")
 
     const tbody=document.querySelector("tbody");
     fetch(`http://localhost:8080/mail/`,{method:'get',headers:{"Authorization":sessionStorage.getItem("myJwt")}})
-        .then(response=>Promise.all([response.status,response.json()]))
-        .then(function ([status,myJson]){
+        .then(response=>response.json())
+        .then(function (myJson){
             console.log(myJson)
             for(let i=0;i<myJson.length;i++){
                 let titel = myJson[i].title;
@@ -16,8 +15,9 @@ function fillableinbox() {
                                     <td>${titel}</td>
                                     <td>${datum}</td>
                                      <td class="sender">${afzender}</td>
+                                      <td>${myJson[i].id}</td>
                                      <td><button class="delete">block</button></td>
-                                                   
+                                                 
                                    </tr>`;
             }
             document.querySelector("table").addEventListener("click",blockUser);

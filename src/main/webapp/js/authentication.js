@@ -13,7 +13,6 @@ form.addEventListener("submit",evt => {
     evt.preventDefault()
     let fd = new FormData(form);
 
-
     //const body={"username":fd.get("username"),"password":fd.get("password")}
     const body={"username":"anyone@example.com","password":"uu44vv"}
 
