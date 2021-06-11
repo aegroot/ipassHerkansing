@@ -8,8 +8,6 @@ public class MailDto {
         this.mail = mail;
         this.password = password;
     }
-
-
     public String getMail() {
         return mail;
     }

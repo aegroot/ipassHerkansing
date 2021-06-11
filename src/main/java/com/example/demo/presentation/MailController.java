@@ -79,10 +79,13 @@ public class MailController {
         MailAccount account=accountservice.findByMail(profile.getUsername());
         List<FindMailDTO>messageList=new ArrayList<>();
         List<Message> messages=account.getSent();
+        System.out.println(messages);
+
         for(Message message : messages){
-            new FindMailDTO(message.getSender().getUsername(),
+            messageList.add( new FindMailDTO(message.getSender().getUsername(),
                     message.getRecipient().getUsername(),
-                    message.getMessage(), message.getTitle(),message.getSendDate(), message.getId());
+                    message.getMessage(), message.getTitle(),message.getSendDate(), message.getId()));
+
         }
         return messageList;
     }

@@ -11,36 +11,37 @@ public class RegisterDto {
     private  int gbyear;
     private  int gbmonth;
     private int gbday;
-    private String naam;
-    private String achternaam;
+    private String firstname;
+    private String lastname;
 
    public MailAccount toMail(){
-       return  new MailAccount(mail,password,new Date(gbyear-1900,gbmonth,gbday),naam,achternaam, Role.gebruiker);
+       return  new MailAccount(mail,password,new Date(gbyear-1900,gbmonth,gbday), firstname, lastname, Role.gebruiker);
    }
 
 
-    public RegisterDto(String mail, String password, int gbyear, int gbmonth, int gbday, String naam) {
+    public RegisterDto(String mail, String password, int gbyear, int gbmonth, int gbday, String firstname,String lastname) {
         this.mail = mail;
         this.password = password;
         this.gbyear = gbyear;
         this.gbmonth = gbmonth;
         this.gbday = gbday;
-        this.naam = naam;
+        this.firstname = firstname;
+        this.lastname=lastname;
     }
 
     public String getMail() {
         return mail;
     }
 
-    public String getNaam() {
-        return naam;
+    public String getFirstname() {
+        return firstname;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public String getAchternaam() {
-        return achternaam;
+    public String getLastname() {
+        return lastname;
     }
 }

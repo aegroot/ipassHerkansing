@@ -1,13 +1,6 @@
 const form = document.querySelector("form");
 
 
-checkloggedin();
-
-
-function checkloggedin(){
-    if(sessionStorage.getItem("myJwt")!=null){window.location.assign("../homepage.html")}
-}
-
 
 form.addEventListener("submit",evt => {
     evt.preventDefault()
@@ -23,6 +16,7 @@ form.addEventListener("submit",evt => {
             if(!response.ok){throw  new Error(response.status);}
        sessionStorage.setItem("myJwt",response.headers.get("Authorization"))
        console.log(sessionStorage.getItem("myJwt"))
+           window.location.assign("../index.html")
     })
         .catch(error=>{console.log(error.message)})
 

@@ -9,7 +9,7 @@ function fillableinbox() {
             for(let i=0;i<myJson.length;i++){
                 let titel = myJson[i].title;
                 console.log(myJson[0]);
-                let datum = myJson[i].sendDate;
+                let datum = myJson[i].date;
                 let afzender = myJson[i].sender;
                 tbody.innerHTML+=`<tr>
                                     <td>${titel}</td>
@@ -17,7 +17,7 @@ function fillableinbox() {
                                      <td class="sender">${afzender}</td>
                                       <td>${myJson[i].id}</td>
                                      <td><button class="delete">block</button></td>
-                                                 
+                                               
                                    </tr>`;
             }
             document.querySelector("table").addEventListener("click",blockUser);

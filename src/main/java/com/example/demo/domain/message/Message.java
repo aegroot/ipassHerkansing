@@ -60,4 +60,16 @@ public class Message {
     public MailAccount getSender() {
         return sender;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", title='" + title + '\'' +
+                ", recipient=" + recipient +
+                ", sender=" + sender +
+                ", sendDate=" + sendDate +
+                '}';
+    }
 }

@@ -23,13 +23,6 @@ public class MailAccountController {
         this.messageService = messageService;
     }
 
-    @PostMapping()
-    public MailAccount create(
-            @RequestBody RegisterDto registerDto){
-        return accountservice.save((registerDto.toMail()));
-
-    }
-
     @DeleteMapping
     public void delete(@RequestBody MailDto dto) throws IllegalAccessException {
 

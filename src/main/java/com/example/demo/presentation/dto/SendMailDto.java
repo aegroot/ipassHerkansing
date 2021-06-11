@@ -8,11 +8,9 @@ public class SendMailDto {
     public String getTitle() {
         return title;
     }
-
     public String getRecipient() {
         return recipient;
     }
-
     public String getMessage() {
         return message;
     }
