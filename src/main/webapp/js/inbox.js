@@ -14,13 +14,14 @@ function fillableinbox() {
                 tbody.innerHTML+=`<tr>
                                     <td>${titel}</td>
                                     <td>${datum}</td>
-                                     <td class="sender">${afzender}</td>
-                                      <td>${myJson[i].id}</td>
+                                     <td class="sender">${afzender}</td>                                
                                      <td><button class="delete">block</button></td>
-                                               
+                                     <td><button class="view" id="${myJson[i].id}-open">view</button></td>                                           
                                    </tr>`;
             }
-            document.querySelector("table").addEventListener("click",blockUser);
+            document.querySelector(".delete").addEventListener("click",blockUser);
+            document.querySelectorAll(".view").forEach(e=>{e.addEventListener("click",openModal)})
+            document.querySelector("#close").addEventListener("click",closeModal)
         })
 }
 
@@ -32,7 +33,8 @@ function blockUser(e){
     const mail=e.target().querySelector(".sender");
     const id=sessionStorage.getItem("id")
     const deleteBody=`{adder:${id},target:${mail}}`
-    fetch('blocked',{method:'post',body:JSON.stringify(deleteBody)})
+    fetch('blocked',{method:'post',body:JSON.stringify(deleteBody),
+        headers:{"Authorization":sessionStorage.getItem("myJwt")}})
         .then(Response=>{
             if(!Response.ok){throw new Error(Response.status);}
         })
@@ -44,5 +46,41 @@ function blockUser(e){
 }
 
 fillableinbox();
+
+
+
+function closeModal(){
+    console.log("test")
+
+
+    const dialog=document.querySelector("dialog")
+    dialog.close()
+}
+function openModal(event){
+    const button=event.target;
+    const openid=button.id
+    console.log(openid)
+    const id=openid.split("-")[0]
+    console.log(id)
+
+    const dialog=document.querySelector("dialog")
+
+    fetch(`http://localhost:8080/mail/${id}`,{method:"GET",
+        headers:{"Authorization":sessionStorage.getItem("myJwt")}})
+        .then(response=>response.json())
+        .then(function (myJson){
+            document.querySelector("#recipient").innerHTML=myJson.recipient
+            document.querySelector("#message").innerHTML=myJson.message
+            document.querySelector("#sender").innerHTML=myJson.sender
+            document.querySelector("#title").innerHTML=myJson.title
+            document.querySelector("#date").innerHTML=myJson.date
+            dialog.show();
+
+
+        })
+
+
+
+}
 
 

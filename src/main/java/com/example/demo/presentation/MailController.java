@@ -65,7 +65,7 @@ public class MailController {
         long id=accountservice.findByMail(profile.getUsername()).getId();
 
         Message message=messageService.findById(mid);
-        if(id== message.getSender().getId()){
+        if(id!= message.getSender().getId()){
             return  null;
         }
 

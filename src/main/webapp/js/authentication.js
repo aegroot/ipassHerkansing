@@ -16,7 +16,7 @@ form.addEventListener("submit",evt => {
             if(!response.ok){throw  new Error(response.status);}
        sessionStorage.setItem("myJwt",response.headers.get("Authorization"))
        console.log(sessionStorage.getItem("myJwt"))
-           window.location.assign("../index.html")
+           window.location="../index.html"
     })
         .catch(error=>{console.log(error.message)})
 
