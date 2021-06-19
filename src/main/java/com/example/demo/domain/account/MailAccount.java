@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 public class MailAccount extends User {
-    @Column(unique=true)
     private Date birthDate;
     @ManyToMany
     private List<Message>recieved;

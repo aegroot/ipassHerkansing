@@ -14,24 +14,25 @@
     <dialog id="register">
         <h3 class="message"></h3>
        <form id="registration-form">
+           <h1 class="error">registratie</h1>
            <label> naam:
                <input type="text" name="lastName">
-               <input type="text" name="firstName">
+               <input type="text" name="firstName">   <br>
            </label>
            <label> geboortedatum:
                 dag<input type="number" name="gbday">
                maand<input type="number" name="gbmonth">
                jaar<input type="number" name="gbyear">
-           </label>
+           </label>   <br>
 
            <label>
-               <input type="text" name="username">
+               username<input type="text" name="username">   <br>
            </label>
            <label>
-               <input type="password" name="password">
+              password <input type="password" name="password">
            </label>
-           <button id="register-submit"></button>
-           <button id="register-cancel"></button>
+           <button id="register-submit" type="submit">submit</button>
+           <button id="register-cancel">cancel</button>
 
 
 
@@ -39,26 +40,22 @@
     </dialog>
 
 
+
     <div class="login">
-        <dialog>
-            <h3 class="message"></h3>
-            <label>
-                <textarea class="message"></textarea>
-            </label>
-        </dialog>
 
-
-    <form id="login-form">
+            <form id="login-form">
         <label>enter you mail
             <input type="email" name="username">
+
             <br> enter your password
             <input type="password" name="password">
             <br>
         </label>
         <button type="submit">login</button>
-        <button id="register-open">register</button>
+
         <a href="homepage.html" >hello world</a>
     </form>
+       <button id="register-open">register</button>
     </div>
 
 </main>
@@ -66,6 +63,7 @@
     <p>made by alex groot as part of a school project</p>
 </footer>
 <script src="./js/authentication.js"></script>
+<script src="js/registration.js"> </script>
 
 
 </body>
