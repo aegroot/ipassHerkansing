@@ -12,7 +12,7 @@ submitButton.addEventListener("click",register)
 cancelButton.addEventListener("click",closeModal)
 
 
-register_form.addEventListener("click",register)
+//register_form.addEventListener("click",register)
 
 
 
