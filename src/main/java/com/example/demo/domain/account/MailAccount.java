@@ -20,8 +20,6 @@ public class MailAccount extends User {
     @ManyToMany
     private List<Message>sent;
     @ManyToMany
-    private  List<MailAccount>friends;
-    @ManyToMany
     private List<MailAccount>blocked;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -44,7 +42,6 @@ public class MailAccount extends User {
         this.birthDate = birthDate;
         this.recieved = new ArrayList<>();
         this.sent = new ArrayList<>();
-        this.friends = new ArrayList<>();
         this.blocked = new ArrayList<>();
     }
     public boolean addToBlocked(MailAccount account){
@@ -65,24 +62,7 @@ public class MailAccount extends User {
         return blocked.contains(account);
     }
 
-    public boolean addToFriends(MailAccount account){
-        if (account.getUsername().equals(this.getUsername()) ||this.inBlocked(account)||inFriends(account)){return  false;}
-        else
-        return  friends.add(account);
-    }
 
-    public boolean removeFromFriends(MailAccount account){
-        for(MailAccount mailAccount:friends){
-            if (mailAccount.getUsername().equals(account.getUsername())){
-                blocked.remove(mailAccount);
-                return  true;
-            }
-        }
-        return  false;
-    }
-    public boolean inFriends(MailAccount account){
-        return friends.contains(account);
-    }
 
     public boolean addTosent(Message message){
         return  sent.add(message);
@@ -99,6 +79,7 @@ public class MailAccount extends User {
     public  boolean addToRecieved(Message message){
        return recieved.add(message);
     }
+
     public boolean removeFromRecieved(Message message){
         for(Message message1:recieved){
             if(message1.getId()== message.getId()){
@@ -139,13 +120,6 @@ public class MailAccount extends User {
         this.sent = sent;
     }
 
-    public List<MailAccount> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(List<MailAccount> friends) {
-        this.friends = friends;
-    }
 
     public List<MailAccount> getBlocked() {
         return blocked;
