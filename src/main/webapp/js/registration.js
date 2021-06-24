@@ -2,7 +2,7 @@ const register_form=document.getElementById("registration-form")
 const openButton=document.getElementById("register-open")
 const submitButton=document.getElementById("register-submit")
 const cancelButton=document.getElementById("register-cancel")
-
+const errorMessage=document.querySelector("#registration-form .error")
 
 const errorDialog=document.getElementById("error")
 
@@ -10,9 +10,6 @@ const errorDialog=document.getElementById("error")
 openButton.addEventListener("click",openModal)
 submitButton.addEventListener("click",register)
 cancelButton.addEventListener("click",closeModal)
-
-
-//register_form.addEventListener("click",register)
 
 
 
@@ -38,11 +35,12 @@ function register(event){
             if(!response.ok){
                 throw  new Error(response.status)
             }
-            register_form.style.backgroundColor="lightblue"
+            register_form.style.backgroundColor="green"
+            errorMessage.textContent="gelukt! u kunt nu inloggen"
 
         })
         .catch(error=>{
-            const errorMessage=document.querySelector("#registration-form .error")
+
 
             register_form.style.backgroundColor="lightred"
             errorMessage.textContent="error"+error.message

@@ -1,7 +1,14 @@
+//import MailService from '../service/mailservice';
+//const mailservice=new MailService();
+
+
 
 function fillableinbox() {
 
+
+
     const tbody=document.querySelector("tbody");
+    //mailservice.getInbox()
     fetch(`http://localhost:8080/mail/`,{method:'get',headers:{"Authorization":sessionStorage.getItem("myJwt")}})
         .then(response=>response.json())
         .then(function (myJson){
@@ -15,32 +22,36 @@ function fillableinbox() {
                                     <td>${titel}</td>
                                     <td>${datum}</td>
                                      <td class="sender">${afzender}</td>                                
-                                     <td><button class="delete">block</button></td>
+                                     <td><button class="block" id="${myJson[i].sender}-delete">block</button></td>
                                      <td><button class="view" id="${myJson[i].id}-open">view</button></td>                                           
                                    </tr>`;
             }
-            document.querySelector(".delete").addEventListener("click",blockUser);
+            document.querySelectorAll(".block").forEach(e=>{e.addEventListener("click",blockUser)})
             document.querySelectorAll(".view").forEach(e=>{e.addEventListener("click",openModal)})
             document.querySelector("#close").addEventListener("click",closeModal)
         })
 }
 
 function blockUser(e){
-    if (!e.target.classList.contains("delete")) {
+    if (!e.target.classList.contains("block")) {
+
+        console.log("no")
         return;
     }
 
-    const mail=e.target().querySelector(".sender");
-    const id=sessionStorage.getItem("id")
-    const deleteBody=`{adder:${id},target:${mail}}`
-    fetch('blocked',{method:'post',body:JSON.stringify(deleteBody),
+    const button=e.target;
+    const deleteid=button.id
+
+    const id=deleteid.substring(0,deleteid.length-7)
+    console.log(id)
+    deleteid.substring()
+    //const deleteBody=`{adder:${deleteId},target:${mail}}`
+    fetch(`blocked/${id}`,{method:'post',
         headers:{"Authorization":sessionStorage.getItem("myJwt")}})
         .then(Response=>{
             if(!Response.ok){throw new Error(Response.status);}
         })
 
-
-    console.log(mail.innerHTML);
 
 
 }
@@ -59,9 +70,7 @@ function closeModal(){
 function openModal(event){
     const button=event.target;
     const openid=button.id
-    console.log(openid)
     const id=openid.split("-")[0]
-    console.log(id)
 
     const dialog=document.querySelector("dialog")
 

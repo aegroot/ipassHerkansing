@@ -25,10 +25,8 @@ public class BlockedController {
     public AccountListDto add(@PathVariable("username") String username,Authentication authentication){
         UserProfile profile=(UserProfile)authentication.getPrincipal();
         String name=profile.getUsername();
-
-        System.out.println(name+" "+username);
-        MailAccount accountt=accountservice.findByMail(name);
-        MailAccount accounta=accountservice.findByMail(username);
+        MailAccount accounta=accountservice.findByMail(name);
+        MailAccount accountt=accountservice.findByMail(username);
         accounta.addToBlocked(accountt);
       accountservice.update(accounta);
         return new AccountListDto(accounta.getUsername(),accounta.getUsername());
@@ -40,8 +38,10 @@ public class BlockedController {
 
         MailAccount account=accountservice.findByMail(profile.getUsername());
         List<AccountListDto>accountListDtos=new ArrayList<>();
+        System.out.println(profile.getUsername()+"hello");
         for(MailAccount account1:account.getBlocked()){
-            accountListDtos.add(new AccountListDto(account.getUsername(),account1.getUsername()));
+            accountListDtos.add(new AccountListDto(account1.getUsername(),
+                    account1.getFirstName()+" "+account1.getLastName()));
         }
         return  accountListDtos;
     }

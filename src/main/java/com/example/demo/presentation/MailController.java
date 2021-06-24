@@ -33,17 +33,16 @@ public class MailController {
 
 
 
-
-
-
-
     @PostMapping()
-    public Message send(@RequestBody SendMailDto dto, Authentication authentication){
+    public void send(@RequestBody SendMailDto dto, Authentication authentication){
         UserProfile profile= (UserProfile) authentication.getPrincipal();
 
         MailAccount sender=accountservice.findByMail(profile.getUsername());
         MailAccount recipient=accountservice.findByMail(dto.getRecipient());
-        return messageService.save(new Message(recipient,sender,dto.getMessage(),dto.getTitle()));
+        if (!recipient.getBlocked().contains(sender)){
+            messageService.save(new Message(recipient,sender,dto.getMessage(),dto.getTitle()));
+        }
+
     }
 
     @GetMapping()
@@ -65,7 +64,7 @@ public class MailController {
         long id=accountservice.findByMail(profile.getUsername()).getId();
 
         Message message=messageService.findById(mid);
-        if(id!= message.getSender().getId()){
+        if(id!=message.getSender().getId()&&id!=message.getRecipient().getId()){
             return  null;
         }
 

@@ -47,10 +47,10 @@ public class AccountService {
             account1.setFirstName(mailAccount.getFirstName());
             account1.setLastName(mailAccount.getLastName());
             account1.setBlocked(mailAccount.getBlocked());
-            account1.setFriends(mailAccount.getFriends());
             account1.setRecieved(mailAccount.getRecieved());
             account1.setSent(mailAccount.getSent());
             account1.setPassword(mailAccount.getPassword());
+            account1.setBlocked(mailAccount.getBlocked());
             return repository.save(account1);
 
         }

@@ -28,8 +28,8 @@ public class Message {
         this.recipient = recipient;
         this.sender = sender;
         this.sendDate = new Date(System.currentTimeMillis());
-        if(!recipient.inBlocked(sender)){
-            recipient.addToRecieved(this);}
+
+            recipient.addToRecieved(this);
         sender.addTosent(this);
     }
 

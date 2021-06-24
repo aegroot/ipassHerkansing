@@ -11,12 +11,11 @@ fetch("mail/sent",{method:"GET",
             let titel = myJson[i].title;
             console.log(myJson[0]);
             let datum = myJson[i].date;
-            let ontvanger = myJson[i].target;
+            let ontvanger = myJson[i].recipient;
             tbody.innerHTML+=`<tr>
                                     <td>${titel}</td>
                                     <td>${datum}</td>     
-                                    <td>${ontvanger}</td>                        
-                                     <td>${myJson[i].id}</td>
+                                    <td>${ontvanger}</td>                                                       
                                      <td><button class="view" id="${myJson[i].id}-open">view</button></td>                                               
                                    </tr>`;
         }

@@ -18,14 +18,6 @@ div{
     padding: 100px;
 }
 
-#dialog p{background-color: wheat}
-
-
-div#dialog{
-    position: center;
-    margin:0;
-    width: 500px;
-}
 tr,th,td{border: 1px solid beige}
 
 

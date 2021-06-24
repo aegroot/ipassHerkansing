@@ -64,32 +64,7 @@ class MailAccountTest {
 
     }
 
-    @Test
-    void addToFriendsGood(){
-        account1.addToFriends(account2);
-        assertTrue(account1.addToFriends(account3));
-    }
-    @Test
-    void addToFriendsSame(){
-        account1.addToFriends(account2);
-        assertFalse(account1.addToFriends(account1));
-    }
-    @Test
-    void addToFriendsContains(){
-        account1.addToFriends(account2);
-        assertFalse(account1.addToFriends(account2));
-    }
 
-    @Test
-    void removeFromFriendsGood(){
-        account1.addToFriends(account2);
-        assertTrue(account1.removeFromFriends(account2));
-    }
-    @Test
-    void removeFromFriendsBad(){
-        account1.addToFriends(account2);
-        assertFalse(account1.removeFromFriends(account3));
-    }
     @Test
     void addToSentGood(){
         assertTrue(account1.addTosent(new Message(account2,account1,"beste ...","groeten")));
