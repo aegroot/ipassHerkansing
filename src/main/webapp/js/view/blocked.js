@@ -1,14 +1,15 @@
+
+import Blockedservice from "../service/blockedservice.js";
+
+const blockedservice=new Blockedservice();
+
 function fillTableBlocked(){
 
 
     const tbody=document.querySelector("tbody");
     tbody.innerHTML="";
-    fetch(`blocked`,{method:'get',headers:{"Authorization":sessionStorage.getItem("myJwt")}})
-        .then(response=>Promise.all([response.status,response.json()]))
-        .then(function ( [status,myJson]) {
-
-
-            console.log(myJson);
+    blockedservice.getBlocked()
+        .then(function (myJson) {
             for(let i=0;i<myJson.length;i++){
                 let naam=myJson[i].naam;
                 let adres=myJson[i].mail;
@@ -25,18 +26,17 @@ function fillTableBlocked(){
 
 }
 function removeFromBlocked(e){
+    console.log("test")
+
     if (!e.target.classList.contains("deleteBtn")) {
         return;
     }
     const button=e.target
     const mail=button.id
 
-    fetch(`blocked/${mail}`,{method:'DELETE'
-        ,headers: {"Authorization":sessionStorage.getItem("myJwt")}})
-        .then(Response=>{
-            if(!Response.ok){throw new Error(Response.status);} fillTableBlocked()
-
-        })
+        blockedservice.doRemoveFromBlocked(mail)
+        .then(function (){fillTableBlocked()}
+        )
         .catch(error=>{
             const header=document.getElementById("error-message")
             header.innerHTML=error.message;

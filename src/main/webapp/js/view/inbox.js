@@ -1,5 +1,8 @@
-//import MailService from '../service/mailservice';
-//const mailservice=new MailService();
+import MailService from '../service/mailservice.js';
+import Blockedservice from "../service/blockedservice.js";
+
+const blockedservice=new Blockedservice();
+const mailservice=new MailService();
 
 
 
@@ -8,9 +11,7 @@ function fillableinbox() {
 
 
     const tbody=document.querySelector("tbody");
-    //mailservice.getInbox()
-    fetch(`http://localhost:8080/mail/`,{method:'get',headers:{"Authorization":sessionStorage.getItem("myJwt")}})
-        .then(response=>response.json())
+    mailservice.getInbox()
         .then(function (myJson){
             console.log(myJson)
             for(let i=0;i<myJson.length;i++){
@@ -23,7 +24,7 @@ function fillableinbox() {
                                     <td>${datum}</td>
                                      <td class="sender">${afzender}</td>                                
                                      <td><button class="block" id="${myJson[i].sender}-delete">block</button></td>
-                                     <td><button class="view" id="${myJson[i].id}-open">view</button></td>                                           
+                                     <td><button class="view" id="${myJson[i].id}-open">view</button></td>                                                                    
                                    </tr>`;
             }
             document.querySelectorAll(".block").forEach(e=>{e.addEventListener("click",blockUser)})
@@ -45,12 +46,10 @@ function blockUser(e){
     const id=deleteid.substring(0,deleteid.length-7)
     console.log(id)
     deleteid.substring()
-    //const deleteBody=`{adder:${deleteId},target:${mail}}`
-    fetch(`blocked/${id}`,{method:'post',
-        headers:{"Authorization":sessionStorage.getItem("myJwt")}})
-        .then(Response=>{
-            if(!Response.ok){throw new Error(Response.status);}
-        })
+        blockedservice.doBlockUser(id)
+        .then(function (){button.style.color="green";})
+            .catch(error=>{
+                button.style.color="red";})
 
 
 
@@ -74,9 +73,7 @@ function openModal(event){
 
     const dialog=document.querySelector("dialog")
 
-    fetch(`http://localhost:8080/mail/${id}`,{method:"GET",
-        headers:{"Authorization":sessionStorage.getItem("myJwt")}})
-        .then(response=>response.json())
+        mailservice.getMail(id)
         .then(function (myJson){
             document.querySelector("#recipient").innerHTML=myJson.recipient
             document.querySelector("#message").innerHTML=myJson.message
@@ -91,5 +88,6 @@ function openModal(event){
 
 
 }
+
 
 

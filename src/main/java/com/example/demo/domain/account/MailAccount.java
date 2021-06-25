@@ -15,11 +15,11 @@ import java.util.List;
 public class MailAccount extends User {
     @Column(unique = false)
     private Date birthDate;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Message>recieved;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Message>sent;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<MailAccount>blocked;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

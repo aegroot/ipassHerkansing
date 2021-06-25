@@ -1,3 +1,6 @@
+import MailService from "../service/mailservice.js";
+const mailService=new MailService()
+
 var mailLabel = document.querySelector(".mailContainer");
 const form = document.querySelector(".form");
 
@@ -18,22 +21,10 @@ form.addEventListener("submit",
                 "message": fd.get("message")
             }
 
-            let data = new FormData();
+            mailService.doSend(reqbody)
+                .then(function (){})
+                .catch(error=>{})
 
-            data.append("sender", "someone@example.com")
-            data.append("recipient", mailList[i])
-            data.append("message", fd.get("message"))
-            data.append("title", fd.get("title"))
-
-
-            fetch('http://localhost:8080/mail', {
-                method: 'post', body: JSON.stringify(reqbody)
-                , headers: {"content-type": "application/json","Authorization":sessionStorage.getItem("myJwt")}
-            })
-                .then(response => response.json())
-                .then(status => {
-                    console.log(status);
-                })
 
 
         }

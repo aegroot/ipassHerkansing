@@ -23,6 +23,7 @@ public class AccountService {
         return repository.save(mailAccount);
     }
     public void delete(MailAccount mailAccount){
+
         repository.delete(mailAccount);
     }
     public MailAccount findById(Long id){

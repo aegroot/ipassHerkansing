@@ -29,7 +29,7 @@ public class Message {
         this.sender = sender;
         this.sendDate = new Date(System.currentTimeMillis());
 
-            recipient.addToRecieved(this);
+        recipient.addToRecieved(this);
         sender.addTosent(this);
     }
 

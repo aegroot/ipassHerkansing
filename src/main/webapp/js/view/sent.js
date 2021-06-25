@@ -1,11 +1,10 @@
+import MailService from "../service/mailservice.js";
 
-
+const mailservice=new MailService();
 const tbody=document.querySelector("tbody");
 
 
-fetch("mail/sent",{method:"GET",
-    headers:{"Authorization":sessionStorage.getItem("myJwt")}})
-    .then(response=>response.json())
+mailservice.getSent()
     .then(myJson=>{
         for(let i=0;i<myJson.length;i++){
             let titel = myJson[i].title;
@@ -37,10 +36,7 @@ function openModal(event){
     console.log(id)
 
     const dialog=document.querySelector("dialog")
-
-    fetch(`http://localhost:8080/mail/${id}`,{method:"GET",
-        headers:{"Authorization":sessionStorage.getItem("myJwt")}})
-        .then(response=>response.json())
+    mailservice.fetchMail(id)
         .then(function (myJson){
             document.querySelector("#recipient").innerHTML=myJson.recipient
             document.querySelector("#message").innerHTML=myJson.message
