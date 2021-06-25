@@ -4,14 +4,14 @@ export  default class MailService{
     constructor() {}
 
     fetchSend(reqbody){
-       return  fetch('http://localhost:8080/mail', {
+       return  fetch('mail', {
             method: 'post', body: JSON.stringify(reqbody)
             , headers: {"content-type": "application/json","Authorization":token}
         })
     }
 
      fetchInbox(){
-        return fetch(`http://localhost:8080/mail/`,{
+        return fetch(`mail/`,{
             method:'get',headers:{"Authorization":token}})
             .then((response)=>{
                 if (!response.ok) {
@@ -35,7 +35,7 @@ export  default class MailService{
             })
     }
      fetchMail(id){
-        return fetch(`http://localhost:8080/mail/${id}`,{method:"GET",
+        return fetch(`mail/${id}`,{method:"GET",
             headers:{"Authorization":token}})
             .then((response)=>{
                 if (!response.ok) {
