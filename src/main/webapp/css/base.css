@@ -2,7 +2,7 @@
 
 footer,header{
     position: sticky;
-    background-color: gray;
+    background-color: cyan;
     width: 100%;
 }
 
@@ -13,12 +13,12 @@ footer{
 
 div{
     margin: 200px;
-    background-color: gray;
+    background-color: lightcyan;
     min-height: 300px;
     padding: 100px;
 }
 
-tr,th,td{border: 1px solid beige}
+tr,th,td{border: 1px solid black}
 
 
 

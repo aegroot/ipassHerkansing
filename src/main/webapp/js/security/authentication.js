@@ -1,4 +1,5 @@
 const form = document.querySelector("form#login-form");
+const logout=document.querySelector(".log-out")
 
 
 
@@ -21,3 +22,11 @@ form.addEventListener("submit",evt => {
         .catch(error=>{console.log(error.message)})
 
 })
+
+logout.addEventListener("click",evt => {
+    sessionStorage.removeItem("MyJWT")
+    window.location.reload();
+})
+
+
+
